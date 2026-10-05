@@ -15,6 +15,13 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+async def check_webhook(application):
+    info = await application.bot.get_webhook_info()
+    print("=== WEBHOOK INFO ===")
+    print(f"url: {info.url}")
+    print(f"pending: {info.pending_update_count}")
+    print(f"last_error: {info.last_error_message}")
+    print("====================")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -42,7 +49,12 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-app = Application.builder().token(TELEGRAM_TOKEN).build()
+app = (
+    Application.builder()
+    .token(TELEGRAM_TOKEN)
+    .post_init(check_webhook)
+    .build()
+)
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
