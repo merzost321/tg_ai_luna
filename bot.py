@@ -34,7 +34,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         response = client.responses.create(
-            model="gpt-5.6-mini",
+            model="gpt-6-luna",
             input=text,
         )
 
