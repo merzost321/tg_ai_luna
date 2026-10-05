@@ -52,5 +52,6 @@ print("бот запущен...")
 app.run_webhook(
     listen="0.0.0.0",
     port=int(os.getenv("PORT", "10000")),
-    webhook_url="https://tg-ai-luna.onrender.com/",
+    url_path="telegram",
+    webhook_url="https://tg-ai-luna.onrender.com/telegram",
 )
